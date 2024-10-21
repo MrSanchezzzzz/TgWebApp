@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:teledart/model.dart';
 import 'package:teledart/teledart.dart';
 import 'package:teledart/telegram.dart';
 import 'package:tg_web_app/screens/main_screen.dart';
 import 'package:tg_web_app/themes.dart';
+
+import 'env/env.dart';
+
 Future<void> main() async {
   runApp(const MyApp());
-  var BOT_TOKEN = '8140771829:AAEByf6PRwzGAx_2LMu6DTRTh9LOzWwuXMY';
+  var BOT_TOKEN = Env.telegramApiKey;
   final username = (await Telegram(BOT_TOKEN).getMe()).username;
   var teledart = TeleDart(BOT_TOKEN, Event(username!));
 
