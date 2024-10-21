@@ -1,8 +1,24 @@
 import 'package:flutter/material.dart';
-
-void main() {
+import 'package:teledart/model.dart';
+import 'package:teledart/teledart.dart';
+import 'package:teledart/telegram.dart';
+import 'package:tg_web_app/screens/main_screen.dart';
+import 'package:tg_web_app/themes.dart';
+Future<void> main() async {
   runApp(const MyApp());
+  var BOT_TOKEN = '8140771829:AAEByf6PRwzGAx_2LMu6DTRTh9LOzWwuXMY';
+  final username = (await Telegram(BOT_TOKEN).getMe()).username;
+  var teledart = TeleDart(BOT_TOKEN, Event(username!));
+
+  teledart.onMessage(entityType: 'bot_command', keyword: 'start')
+      .listen((message) => teledart.sendMessage(message.chat.id, 'Hello TeleDart!'));
+
+// Short way (recommended)
+  teledart.onCommand('glory')
+      .listen((message) => message.reply('to Ukraine!'));
+  teledart.start();
 }
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -12,58 +28,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 5;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      debugShowCheckedModeBanner: false,
+      darkTheme: FlutterMidnightNeonTheme.lightTheme,
+      theme: FlutterMidnightNeonTheme.lightTheme,
+      themeMode: ThemeMode.dark,
+      home: const MainScreen()
     );
   }
 }
