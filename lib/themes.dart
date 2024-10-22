@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class FlutterMidnightNeonTheme {
-
   static const Color _primaryColor = Color(0xFF6C64BC);
   static const Color _primaryInverseColor = Color(0xFF3C457B);
   static const Color _onSurfaceVariant = Color(0xFF0DFFE7);
