@@ -3,7 +3,6 @@ import 'package:tg_web_app/screens/main_screen.dart';
 import 'package:tg_web_app/themes.dart';
 import 'package:tg_web_app/utils/telegram.dart';
 
-
 Future<void> main() async {
   runApp(const MyApp());
   TelegramManager.init();
